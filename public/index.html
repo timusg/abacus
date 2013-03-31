@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Counters</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="node websockets and redis pub sub
+based dashboard">
+<meta name="author" content="sumit gupta">
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<style>
+body {
+  padding-top: 60px;
+}
+
+</style>
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/counter.css" />
+<!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <a class="brand" href="./index.html">
+        <strong>Counters</strong>
+      </a>
+    </div>
+  </div>
+</div>
+<div id="counters" class="row-fluid" style="text-align: center;">
+  <div class="span12">
+    <div class="row-fluid" style="width: 98%">
+      <div id="wrapper" class=" well span4">
+        <h3> Foo </h3>
+        <div id="flip-counter-foo" class="flip-counter">
+        </div>
+      </div>
+      <div id="wrapper" class=" well span4">
+        <h3> bar </h3>
+        <div id="flip-counter-bar" class="flip-counter">
+        </div>
+      </div>
+      <div id="wrapper" class=" well span4">
+        <h3> bazz </h3>
+        <div id="flip-counter-bazz" class="flip-counter">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+</script>
+<script src="lib/jquery-1.8.2.min.js"></script>
+<script src="lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="lib/flipcounter.js"></script>
+<script type="text/javascript" src="socket.io/socket.io.js"></script>
+<script type="text/javascript" src="lib/jquery-1.8.2.min.js"></script>
+
+<script>
+var foo = new flipCounter('flip-counter-foo', {value:0, auto:false});
+var bar = new flipCounter('flip-counter-bar', {value:0, auto:false});
+var bazz = new flipCounter('flip-counter-bazz', {value:0, auto:false});
+var socket = io.connect();
+var pages = {};
+var lastPageId = 0;
+socket.on('connect', function () {
+  console.log('Socket connected');
+  socket.on('counters', function (msg) {
+    counters = eval('('+msg.data+')');
+    foo.setValue(counters.foo);
+    bar.setValue(counters.bar);
+    bazz.setValue(counters.bazz);
+  });
+});
+</script>
+</body>
+</html>

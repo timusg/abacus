@@ -1,0 +1,16 @@
+{
+  "name": "counters",
+  "description": "real time counters",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.x",
+    "socket.io": "0.9.10",
+    "hiredis": "x",
+    "redis": "x"
+  },
+  "engines": {
+    "node": "0.8.4",
+    "npm": "1.1.49"
+  }
+}
